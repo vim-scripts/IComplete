@@ -1,0 +1,69 @@
+#!/bin/bash
+#
+# Copyright 2005 Timo Hirvonen <tihirvon@ee.oulu.fi>
+#
+# This file is licensed under the GPLv2.
+
+source $(dirname $0)/utils.sh || exit 1
+
+default_languages="all,-html"
+[[ -z $CTAGS_LANGUAGES ]] && CTAGS_LANGUAGES="$default_languages"
+
+usage()
+{
+	echo "Usage: $PROGRAM_NAME [DIR]"
+	echo "To specify languages for which tags are generated"
+	echo "set CTAGS_LANGUAGES environment variable. Default is '$default_languages'."
+	echo "See \`ctags --list-languages' and \`man ctags' (--languages option)."
+}
+
+main()
+{
+	while [[ $# -gt 0 ]]
+	do
+		case $1 in
+			--help)
+				usage
+				exit 0
+				;;
+			--)
+				shift
+				break
+				;;
+			-*)
+				pdie "unrecognized option: \`$1'"
+				;;
+			*)
+				break
+				;;
+		esac
+		shift
+	done
+	if [[ $# -gt 1 ]]
+	then
+		usage
+		exit 1
+	fi
+
+	[[ -z $top_srcdir ]] && pdie "top_srcdir not set"
+
+	# always cd to $top_srcdir because DIR is relative to $top_srcdir
+	cd "$top_srcdir" || exit 1
+
+	if [[ $# -eq 0 ]]
+	then
+		# generate local tag files for each subdirectory
+		find * -type d -exec "$0" {} \;
+
+		# generate global tag file. contains only non-static tags
+		[[ $BUILD_VERBOSITY -gt 0 ]] && echo "   TAGS   [global]"
+		ctags --file-scope=no --languages="$CTAGS_LANGUAGES" -R
+	else
+		# generate local tag file
+		[[ $BUILD_VERBOSITY -gt 0 ]] && echo "   TAGS   $1/"
+		cd "$1" || exit 1
+		[[ -n $(ls) ]] && ctags --languages="$CTAGS_LANGUAGES" *
+	fi
+}
+
+main "$@"

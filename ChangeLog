@@ -1,0 +1,59 @@
+Apr 17, 2006:
+	* version 0.4
+	* completely new namespace support (by Maxime Coste)
+	* -t option to specify different tags filename (patch by Yuxuan Wang)
+	* completely new #include file parser, fixes problem of macos which does not understand \\s codes in regexps
+	* fixes segfault (replaced mmap with fread)
+	* improved java support
+	* including a shell script to create a java tags file for system classes
+	* placeholders work for more than two arguments now (forgot the 'g' in the
+	substitute command)
+	* added sys/types.h in parse.h and tree.h which solves compiling under
+	MacOS X
+
+Oct 23, 2005:
+	- version 0.3
+	- finally converted the vim plugin to reuse the new omnifunc
+	- added placeholder support
+	- don't use a temporary file anymore but parse the stdout output in the
+	  vim script directly
+
+Sep 09, 2005:
+	- fixed possible segfault, thanks Colin Dearing
+
+Jul 27, 2005:
+	- version 0.2.2
+	- Can change the path for the /tmp/icomplete.list file, which helps using
+	  icomplete on multiuser systems with g:icomplete_listfile option (patch by Urs Stotz).
+	- Some fixes for Qt4 support, perform a check if an include file is really
+	  a regular file or a directory.
+	- #include<bla.h> doesn't require a space between include and <bla.h> anymore
+
+Jun 19, 2005:
+	- version 0.2.1
+	- added project to SourceForge (http://icomplete.sourceforge.net)
+	- added a gentoo ebuild for easy installation
+	- You can change ctrl-j/k keys now with g:icomplete_{previous/next}_entry_key variables in your vimrc
+	- Parameter completion works again as expected after writing ( followed by some characters
+	- added this-> support
+	- Disable folding in the preview window and showing the preview window in the buffer list
+	- Small bugfixes
+
+May 21, 2005:
+	- Version 0.2
+	- Cleaned up configure script (patch from Timo Hirvonen)
+	- Add a check for +signs, and disable highlighing in the preview window
+	instead of raising an error
+	- Added Ctrl-x,Ctrl-x,Ctrl-u command to force rebuilding of the cache
+	- Union support (Andreas Bricelj)
+	- Fixed bug with completing structs, which was introduced in 0.1.1
+	- Updated documentation
+
+May 07, 2005:
+	- Version 0.1.1
+	- Follows typedefs now, patch from Andreas Bricelj
+	- Basic namespace support, also patch from Andreas Bricelj
+	  Does not understand 'using namespace xxx;' yet though
+
+Apr 22, 2005:
+	- initial release. Version 0.1.0

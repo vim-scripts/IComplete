@@ -1,0 +1,33 @@
+
+			IComplete - A code completion system
+
+  Copyright 2005 Martin Stubenschrott <stubenschrott@gmx.net>
+
+Installation
+~~~~~~~~~~~~
+                        
+IComplete expects the exuberant-ctags program to be installed as ctags somewhere in you path.
+Some distributions like Gentoo or Mandrake install it as exuberant-ctags, if this is true in your case, run the ./configure command like this: 
+    # ./configure CTAGS_CMD=exuberant-ctags
+
+IComplete also copies the vim script to /usr/share/vim/...
+If you have vim installed in /usr/local/share/vim instead try this command:
+    # ./configure --datadir=/usr/local/share
+
+If you want to have IComplete installed in /usr instead of /usr/local use:
+    # ./configure --prefix=/usr
+
+Other options are explained in:
+	# ./configure --help
+
+
+Now just run the normal commands: 
+    # ./configure <options>
+    # make
+    # su
+    $ make install
+
+Documentation
+~~~~~~~~~~~~~
+Up to date documentation can be found at:
+http://stud4.tuwien.ac.at/~e0125672/icomplete.html

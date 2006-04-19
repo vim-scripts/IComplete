@@ -1,0 +1,31 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=1265
+
+There is a new vim plugin OmniCppComplete at:
+http://www.vim.org/scripts/script.php?script_id=1520
+It works better, is easier to setup and is also better maintained, so please use that.
+
+IMPORTANT: I will NOT maintain icomplete in future anymore, if you are interested in improving it, please tell me, and you can take over maintainership.
+
+------------------------------------
+
+**** Features ****
+- Automatic generation of a tags file for the current source file by building a tree of included files. 
+- Listing members (also inherited ones) of a class
+ For QString s; s. only non-static members are suggested, for QString:: only static ones. 
+- Listing all function signatures of overloading methods
+- Recognizes return values of methods.
+QWidget w; w.rect().topLeft(). // Lists completions for a QPoint 
+- Uses the scope of the cursor position
+- Recognizes, if you are inside a method-definition and completes also private or protected variables for this class. For a global scope, only public members are suggested. 
+- Works in both console and graphical vim
+- Uses a cache system for increased spead.
+- Understands namespaces
+- Automatic completions after . and ->
+
+------------------------------------
+
+Quick start: press <Ctrl-X><Ctrl-O> at any code position in insert mode.
+
+For more usage information and screenshots or if you want to donate a little bit, then look at:
+http://icomplete.sourceforge.net
+

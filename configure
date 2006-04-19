@@ -1,0 +1,58 @@
+#!/bin/bash
+
+source $(dirname $0)/scripts/configure.sh || exit 1
+
+# these must be defined
+PACKAGE="icomplete"
+VERSION="0.4"
+PACKAGE_BUGREPORT="stubenschrott@gmx.net"
+PACKAGE_NAME="$PACKAGE - A C/C++ code completion system"
+
+#check_cc_flags()
+#{
+#	check_cc_flag -fvisibility=hidden && CFLAGS="$CFLAGS -fvisibility=hidden"
+#	return 0
+#}
+
+# checks that are always run
+add_check check_cc
+#add_check check_cc_flags
+
+# these directories can be overwritten when calling the configure script
+sysconfdir=/etc
+datadir=/usr/share
+
+parse_command_line "$@"
+
+case $DEBUG in
+	0)
+		;;
+	[1-2])
+		CFLAGS="$CFLAGS -g"
+		;;
+	'')
+		DEBUG=0
+		;;
+	*)
+		warn "DEBUG must be 0-2, setting to 0"
+		DEBUG=0
+		;;
+esac
+
+
+CFLAGS="${CFLAGS} -O2 -D_GNU_SOURCE -std=c99 -Wall -DDEBUG=$DEBUG"
+
+run_checks
+
+# some distributions install ctags as 'exuberant-ctags', so use this option
+[[ -z $CTAGS_CMD ]] && CTAGS_CMD="ctags"
+config_str CTAGS_CMD "$CTAGS_CMD" "executable name of the ctags-program"
+
+generate_config_h
+generate_config_mk
+generate_makefiles . src
+
+print_config
+var_print CTAGS_CMD
+print_compiler_settings
+print_install_dirs
