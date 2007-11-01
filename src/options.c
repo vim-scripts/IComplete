@@ -15,6 +15,7 @@ char       *opt_listmembers    = NULL;
 char       *opt_liststatic     = NULL;
 char       *opt_lang           = "c++";
 char       *opt_tagfile        = "tags";
+char	   *opt_listfile       = ".icomplete_taglist";
 cache_e     opt_cache          = CACHE_AUTO;
 const char *opt_progname       = PACKAGE;
 struct config_s config={NULL,NULL};
@@ -34,6 +35,7 @@ void get_cmdine_opts(int argc, char** argv)
 		{"output"       , 1 , 0 , 'o' }  , 
 		{"lang"         , 1 , 0 , 'g' }  , 
 		{"tagfile"      , 1 , 0 , 't' }  , 
+		{"listfile"	    , 1 , 0 , 's' }  ,
 		{"version"      , 0 , 0 , 'v' }  , 
 		{0              , 0 , 0 , 0   } 
 	};
@@ -83,6 +85,10 @@ void get_cmdine_opts(int argc, char** argv)
 
 			case 'o':
 				opt_output = optarg;
+				break;
+
+			case 's':
+				opt_listfile = optarg;
 				break;
 
 			case 't':

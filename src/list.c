@@ -1,5 +1,5 @@
 /*
- *   $Id: list.c,v 1.1 2005/12/20 02:44:36 gvormayr Exp $
+ *   $Id: list.c,v 1.2 2006/08/04 23:11:43 maxauthority Exp $
  *
  *   This source code is released into the public domain.
  *
@@ -65,6 +65,7 @@ List_item *add_to_list(List *l,const void *item)
     List_item *tmp=malloc(sizeof(List_item));
     if(NULL==tmp)
         return NULL;
+
     tmp->item=(void *)item;
     tmp->next=NULL;
     l->size++;

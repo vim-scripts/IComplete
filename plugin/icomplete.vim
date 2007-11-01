@@ -8,7 +8,11 @@ if v:version < 700
 	finish
 end
 
-" Only do this part when compiled with support for autocommands.
 if has("autocmd")
-	autocmd Filetype cpp,c,java,cs set omnifunc=cppcomplete#Complete
+	autocmd FileType cpp,c set omnifunc=cppcomplete#CompleteMain
+	autocmd FileType cpp,c inoremap <expr> <C-X><C-O> cppcomplete#Complete()
+	autocmd FileType cpp,c inoremap <expr> . cppcomplete#CompleteDot()
+	autocmd FileType cpp,c inoremap <expr> > cppcomplete#CompleteArrow()
+	autocmd FileType cpp,c inoremap <expr> : cppcomplete#CompleteColon()
 endif
+

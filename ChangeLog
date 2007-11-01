@@ -1,3 +1,10 @@
+Nov 01, 2007:
+	* IMPORTANT: Last and final release of icomplete, use OmniCppComplete in future
+	* autocompletion on . or -> (patch by Sanjaya Karunase)
+	* add ability to change name of .icomplete_taglist (Tim Murison)
+	* fixed some segfaults (thanks Johannes Winkelmann)
+	* cleaned up the doc
+
 Apr 17, 2006:
 	* version 0.4
 	* completely new namespace support (by Maxime Coste)

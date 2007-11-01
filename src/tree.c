@@ -13,6 +13,8 @@ Tree *alloc_tree(const char *item)
 
 void free_tree(Tree *t)
 {
+	if(NULL==t)
+		return;
     List *l=alloc_list(NULL);
     if(NULL==l)
         return;

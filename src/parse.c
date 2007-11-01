@@ -165,7 +165,8 @@ static char* get_type_of_token (const char* ident, const char* class, Scope* sco
 				char *pattern = strdup(entry.address.pattern);
 				char *type = extract_type_qualifier(pattern, ident);
 				free(pattern);
-				free_tree(tree);
+				if (tree)
+					free_tree(tree);
 				tagsClose(tfile);
 				return type;
 			}

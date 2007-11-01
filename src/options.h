@@ -26,6 +26,7 @@ extern char*   opt_listmembers;     ///< List members of this class
 extern char*   opt_liststatic;      ///< ??!?
 extern char*   opt_lang;            ///< Language (defaults to c++)
 extern char*   opt_tagfile;         ///< Tag file (defaults to tags)
+extern char*   opt_listfile;	    ///< file used to store filenames to feed to ctags
 extern cache_e opt_cache;           ///< Wether we should build cache or not
 extern const char* opt_progname;    ///< argv[0]
 

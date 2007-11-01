@@ -1,5 +1,6 @@
 - ignore comments
-- better :: support
 - after writing "," in a function call, relist the parameters
 - better java support
 - sorting in the binary? (would fix sorting for entries where just the case differs)
+- what about a new -I option, to give directories where to look for included
+  files (in addition to the ones given in the configuration file)?

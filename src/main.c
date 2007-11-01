@@ -215,7 +215,8 @@ static void build_tags_file(long cache_value)
 			{
 				// create an .icomplete_taglist file to feed the exuberant-ctags program with filenames
 				Tree *includes = build_include_tree(NULL, opt_filename);
-				FILE *taglist = fopen(".icomplete_taglist", "w");
+				FILE *taglist = fopen(opt_listfile, "w");
+				printf("%s - %s - %x - %x\n", opt_listfile, opt_filename, includes, taglist);
 				if (includes && taglist)
 				{
 					write_tree_to_file(includes, taglist);
@@ -235,7 +236,9 @@ static void build_tags_file(long cache_value)
 						fclose(tags);
 					}
 
-					char **arguments = (char**)malloc(sizeof(char*) * (10 + (config.cpp_macros->size*2)));
+					// 10, because we have argmuents[0-8] + the terminating NULL
+					/*char **arguments = (char**)malloc(sizeof(char*) * (10 + (config.cpp_macros->size*2)));*/
+					char **arguments = (char**)calloc(sizeof(char*), 10 + (config.cpp_macros->size*2));
 					if (arguments == NULL)
 						bailout ("Could not get memory in build_tags_file() for char **arguments");
 
@@ -245,23 +248,23 @@ static void build_tags_file(long cache_value)
 					arguments[3]="--fields=afiKmsSzn";
 					arguments[4]="--c++-kinds=cdefgmnpstuvx";
 					arguments[5]="-L";
-					arguments[6]=".icomplete_taglist";
+					arguments[6]=opt_listfile;
 					arguments[7]="-f";
 					arguments[8]=opt_tagfile;
-					int i = 0;
-                                        List_item *it=config.cpp_macros->first;
+					int i = 8;
+					List_item *it=config.cpp_macros->first;
 					while(NULL!=it)
 					{
-						arguments[i+9]="-I";
-						arguments[i+10]=it->item;
+						arguments[++i]="-I";
+						arguments[++i]=it->item;
                                                 it=it->next;
                                                 i+=2;
 					}
-					arguments[i+7]=NULL;
+					arguments[++i] = NULL;
 
 #if DEBUG >= 2
 					printf("CALLING: ");
-					for (int x = 0; x <= i+7; x++)
+					for (int x = 0; x <= i; x++)
 						printf("%s ", arguments[x]);
 					printf("\n");
 #endif
@@ -269,14 +272,14 @@ static void build_tags_file(long cache_value)
 					if (execvp(CTAGS_CMD, arguments) == -1)
 					{
 						perror(CTAGS_CMD);
-						unlink(".icomplete_taglist");
+						unlink(opt_listfile);
 						bailout("Make sure that exuberant-ctags is correctly installed.\n\nSometimes the executable name is not `ctags', then you need to rebuild the `icomplete' package like this:\n\n# CTAGS_CMD=exuberant-ctags ./configure\n# make\n# sudo make install");
 					}
 					free_tree(includes);
-					printf("%d\n", unlink(".icomplete_taglist"));
+					printf("%d\n", unlink(opt_listfile));
 				}
 				else
-					bailout ("Error creating .icomplete_taglist file. Check permissions");
+					bailout ("Error creating taglist file.\nCheck permissions and the include directories in your .icompleterc file");
 				break;
 			}
 		default: /* father */

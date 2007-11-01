@@ -4,7 +4,8 @@
 " License:	This file is placed in the public domain.
 
 " This function is used for the 'omnifunc' option.
-function! cppcomplete#Complete(findstart, base)
+function! cppcomplete#CompleteMain(findstart, base)
+
 	if a:findstart
 		let line = getline('.')
 		let start = col('.') - 1
@@ -86,3 +87,35 @@ function! cppcomplete#Complete(findstart, base)
 	return res
 
 endfunc
+
+function! cppcomplete#Complete()
+	let omni_mapping = "\<C-X>\<C-O>"
+	return omni_mapping
+endfunc
+
+function! cppcomplete#CompleteDot()
+	return '.' . cppcomplete#Complete()
+endfunc
+
+function! cppcomplete#CompleteArrow()
+	let index = col('.') - 2
+	if index >= 0
+		let char = getline('.')[index]
+		if char == '-'
+			return '>' . cppcomplete#Complete()
+		endif
+	endif
+	return '>'
+endfunc
+
+function! cppcomplete#CompleteColon()
+	let index = col('.') - 2
+	if index >= 0
+		let char = getline('.')[index]
+		if char == ':'
+			return ':' . cppcomplete#Complete()
+		endif
+	endif
+	return ':'
+endfunc
+
